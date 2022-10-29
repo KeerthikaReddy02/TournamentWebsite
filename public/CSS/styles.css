@@ -1,0 +1,70 @@
+html{
+  height: 100%;
+  width: 100%;
+}
+.body1 {
+  background-image: url("../Images/wallpaper.png");
+  height: 100%;
+  width: 100%;
+}
+.body2{
+  background-color: #1F2833;
+  height: 100%;
+  width: 100%;
+}
+h1,h2{
+  color:#66FCF1;
+  font-family: Archivo;
+}
+h3{
+  color: white;
+}
+.div1{
+  display: inline-block;
+  width:50%;
+  height:45%;
+  padding-left: 2%;
+}
+.div2{
+  display: inline-block;
+  width:50%;
+  height:45%;
+}
+.btn{
+  background-color: grey;
+  border-radius: 50px 50px 50px 50px;
+  width: 40%;
+}
+.logo{
+  width: 90px;
+  height:90px;
+  padding:1%;
+}
+label{
+  color:white;
+  font-size: 20px;
+}
+#submitButton{
+  width: 150px;
+}
+.info-shape{
+  background-color: #45A29E;
+  border-radius: 50px 50px 50px 50px;
+  width: 200px;
+  padding: 0.1%;
+  text-align: center;
+  display: inline-block;
+  margin:2%;
+}
+.h3Text{
+  color:black;
+}
+.inner-block{
+  border-style: solid;
+  margin:5%;
+  padding: 2%;
+  border-color: #66FCF1;
+}
+h5{
+  color:white;
+}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tourneo</title>
+    <link href="https://fonts.googleapis.com/css?family=Archivo&display=swap" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="CSS/styles.css">
+  </head>
+  <body class="body2">
+    <img class="logo" src="../Images/logo.png" alt="logo">
+    <h1 style="text-align:center;">Player Details</h1>
+        <div class="inner-block">
+          <h2 style="text-align:center;">Details</h2><br>
+          <% for(let i = 0; i < Name.length; i++ ){ %>
+          <h5>Player <%=i+1%>: <%=Name[i]%> </h5>
+          <h5>Contact info: <%=Contact[i]%> </h5>
+          <br>
+          <% } %>
+        </div>
+  </body>
+</html>

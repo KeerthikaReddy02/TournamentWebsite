@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tourneo</title>
+    <link href="https://fonts.googleapis.com/css?family=Archivo&display=swap" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="../CSS/styles.css">
+  </head>
+  <body class="body2">
+    <img class="logo" src="../Images/logo.png" alt="logo">
+    <h1 style="text-align:center;">Join a Tournament</h1><br><br>
+    <div style="text-align:center;display:flex;align-items: center;">
+      <div class="div1">
+        <img style="width:380px;height:300px;"src="./Images/ball.png" alt="ball-img">
+      </div>
+      <div class="div2">
+        <h2>Existing Tournaments</h2><br>
+        <form action="join" method="post">
+
+        <% for(let i = 0; i < Tourna.length; i++ ){ %>
+          <button  type="submit" name= <%=Id[i]%> > <%=Tourna[i]%></h5></button><br><br>
+        <% } %>
+        </form>
+      </div>
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </body>
+</html>
