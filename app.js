@@ -100,16 +100,18 @@ app.get("/guest.html",function(req,res){
   var arr2=[];
   var arr3=[];
   var arr4=[];
+  var arr5=[];
   Tournaments.find({},function(err,tourn){
     tourn.forEach((element) => {
       arr1.push(element.Name);
       arr2.push(element.Time);
       arr3.push(element.Venue);
       arr4.push(element.Contact);
+      arr5.push(element.Format);
     });
   })
   setTimeout(function(){
-     return res.render("guest",{Name:arr1,Time:arr2,Venue:arr3,Contact:arr4});
+     return res.render("guest",{Name:arr1,Time:arr2,Venue:arr3,Contact:arr4,Format:arr5});
      return res.send();
 },3000)
 })
