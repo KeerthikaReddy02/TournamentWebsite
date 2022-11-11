@@ -1,21 +1,20 @@
 //Initialization
 const express = require("express");
-const cors = require("cors");
+const cors = require("cors"); //Cross-Origin Resource Sharing- for server to share its resources only with clients that are on the same domain.
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-const https = require("https");
+const bodyParser = require("body-parser"); // to process data sent in an HTTP request body
 let alert = require('alert');
 
 const app = express();
 app.set("view engine", "ejs");
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true })); //to parse incoming requests
 app.use(express.json());
 app.use(cors({origin: true, credentials: true}));
 app.use(bodyParser.json());
 app.use(express.static("public"));
 
 mongoose
-.connect("mongodb+srv://user:user@cluster0.vhxr2p6.mongodb.net/?retryWrites=true&w=majority")
+.connect("mongodb://localhost:27017/tournamentdB")
 .then(() => console.log("Connected to db"))
 .catch(err => console.log(`Could not Connected to db ${process.env.DB_CONNECTION} `, err));
 
@@ -44,6 +43,13 @@ const tournamentSchema = new mongoose.Schema({
   Contact: {
     type: String,
     required: true
+  },
+  Date:{
+    type: Date,
+    required: true
+  },
+  Remarks:{
+    type: String
   },
   People:[{
     Name:{
@@ -101,6 +107,8 @@ app.get("/guest.html",function(req,res){
   var arr3=[];
   var arr4=[];
   var arr5=[];
+  var arr6=[];
+  var arr7=[];
   Tournaments.find({},function(err,tourn){
     tourn.forEach((element) => {
       arr1.push(element.Name);
@@ -108,10 +116,12 @@ app.get("/guest.html",function(req,res){
       arr3.push(element.Venue);
       arr4.push(element.Contact);
       arr5.push(element.Format);
+      arr6.push(element.Date);
+      arr7.push(element.Remarks);
     });
   })
   setTimeout(function(){
-     return res.render("guest",{Name:arr1,Time:arr2,Venue:arr3,Contact:arr4,Format:arr5});
+     return res.render("guest",{Name:arr1,Time:arr2,Date:arr6,Venue:arr3,Contact:arr4,Format:arr5,Remarks:arr7});
      return res.send();
 },3000)
 })
@@ -135,17 +145,21 @@ app.post("/join",function(req,res){
   var arr5;
   var arr6;
   var arr7;
+  var arrDate;
+  var remarks;
   Tournaments.findById(id,(err,tou)=>{
     arr1=tou.Name;
     arr2=tou.NumberOfPlayers;
     arr3=tou.Format;
     arr4=tou.Time;
+    arrDate=tou.Date;
     arr5=tou.Venue;
     arr6=tou.Contact;
     arr7=tou.People.length;
+    remarks=tou.Remarks;
   })
   setTimeout(function(){
-    return res.render("join",{Name:arr1,NumberOfPlayers:arr2,Format:arr3,Time:arr4,Venue:arr5,Contact:arr6,Id:id,Count:arr7});
+    return res.render("join",{Name:arr1,NumberOfPlayers:arr2,Format:arr3,Time:arr4,Date:arrDate,Venue:arr5,Contact:arr6,Id:id,Count:arr7,Remarks:remarks});
     return res.send();
 },3000)
 })
@@ -157,18 +171,57 @@ app.post("/viewPlayer",function(req,res){
   if(objId!=='undefined'){
    id=objId;
   }
-  var arr1=[];
-  var arr2=[];
+  var arrP1=[];
+  var arrP2=[];
+  var arr1;
+  var arr2;
+  var arr3;
+  var arr4;
+  var arrDate;
+  var arr5;
+  var arr6;
+  var arr7;
+  var arr3;
+  var stat="Tournament yet to complete";
   Tournaments.findById(id,(err,tou)=>{
+    arrId=tou._id;
+    let data_ob = new Date();
+    if(data_ob-tou.Date>0)
+    {
+      stat="Tournament Complete";
+    }
+    arr1=tou.Name;
+    arr2=tou.NumberOfPlayers;
+    arr3=tou.Format;
+    arr4=tou.Time;
+    arrDate=tou.Date;
+    arr5=tou.Venue;
+    arr6=tou.Contact;
+    arr7=tou.People.length;
     tou.People.forEach((person) => {
-      arr1.push(person.Name);
-      arr2.push(person.Contact);
+      arrP1.push(person.Name);
+      arrP2.push(person.Contact);
     });
   })
   setTimeout(function(){
-    return res.render("viewPlayer",{Name:arr1,Contact:arr2});
+    return res.render("viewPlayer",{NameHost:arrP1,ContactHost:arrP2,Id:arrId,Date:arrDate,Status:stat,Name:arr1,NumberOfPlayers:arr2,Format:arr3,Time:arr4,Venue:arr5,Contact:arr6,Id:id,Count:arr7});
     return res.send();
 },3000)
+})
+
+app.post("/deleteTourn",function(req,res){
+  var id=req.body.id;
+  Tournaments.findOneAndDelete({_id:id},(err,tou)=>{
+    if(err)
+    {
+      console.log(err);
+    }
+    else
+    {
+      alert("Tournament has been deleted");
+      return res.sendFile(__dirname+"/loginPage.html");
+    }
+  })
 })
 
 app.post("/player",function(req,res){
@@ -197,15 +250,42 @@ app.post("/player",function(req,res){
   })
 })
 
+app.post("/updateTournDetails",(request,response)=>{
+  const {Name, NoOfPlay, Format, Time, Date, Venue, Contact,Remarks,id}=request.body;
+  Tournaments.findOneAndUpdate({_id:id},
+  {
+  Name:Name,
+  NoOfPlay:NoOfPlay,
+  Format:Format,
+  Time:Time,
+  Date:Date,
+  Venue:Venue,
+  Contact:Contact,
+  Remarks:Remarks,
+  },(err,tou)=>{
+    if(err)
+    {
+      console.log(err);
+    }
+    else
+    {
+      alert("Successfully updated tournament details");
+    }
+  })
+  return response.sendFile(__dirname+"/loginPage.html");
+})
+
 app.post("/tournamentDetails",(request,response)=>{
-const {Name, NoOfPlay, Format, Time, Venue, Contact}=request.body;
+const {Name, NoOfPlay, Format, Time, Date, Venue, Contact,Remarks}=request.body;
 const tournament = new Tournaments({
   Name:Name,
   NumberOfPlayers : NoOfPlay,
   Format: Format,
   Time:Time,
+  Date:Date,
   Venue:Venue,
-  Contact:Contact
+  Contact:Contact,
+  Remarks: Remarks
 })
 tournament.save(err=>{
   if(err){
@@ -222,9 +302,10 @@ tournament.save(err=>{
          response.send();
    },3000)
     })
-    alert("Successfully registered tournament");
+    alert("Successfully created tournament");
   }
 });
+return response.sendFile(__dirname+"/loginPage.html");
 })
 
 //PORTS to listen to

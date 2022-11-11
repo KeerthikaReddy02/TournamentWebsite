@@ -11,28 +11,44 @@
     <img class="logo" src="./Images/logo.png" alt="logo">
       <h1 style="text-align:center;">Host Tournament</h1>
       <br>
-      <div style="text-align:center;">
-      <form action="tournamentDetails" method="post" target="asahost.ejs">
-      <label for="name">Name: </label>
-      <input type="text" name="Name" placeholder="Name" required><br><br>
-
-      <label for="noOfPlay">Number of Players: </label>
-      <input type="number" name="NoOfPlay" placeholder="Number of Players" required><br><br>
-
-      <label for="format">Format: </label>
-      <input type="text" name="Format" placeholder="Format" required><br><br>
-
-      <label for="time">Time: </label>
-      <input type="time" name="Time" placeholder="Time" required><br><br>
-
-      <label for="venue">Venue: </label>
-      <input type="text" name="Venue" placeholder="Venue" required><br><br>
-
-      <label for="contact">Contact info: </label>
-      <input type="tel" name="Contact" placeholder="Contact" required><br><br><br>
-
-      <button id="submitButton" type="submit" class="btn btn-primary">Create Now</button><br>
-      </form>
+    <div class="flex-container">
+      <div style="margin-right:2%;">
+        <label for="name">Name: </label><br><br>
+        <label for="noOfPlay">Number of Players: </label><br><br>
+        <label for="format">Format: </label><br><br>
+        <label for="time">Time: </label><br><br>
+        <label for="Date">Date: </label><br><br>
+        <label for="venue">Venue: </label><br><br>
+        <label for="contact">Contact info: </label><br><br>
+        <label for="remarks">Remarks: </label><br><br>
+      </div>
+      <div >
+        <form action="tournamentDetails" method="post">
+        <input type="text" name="Name" placeholder="Name" required><br><br>
+        <input type="number" name="NoOfPlay" placeholder="Number of Players" required><br><br>
+        <input type="text" name="Format" placeholder="Format" required><br><br>
+        <input type="time" name="Time" placeholder="Time" required><br><br>
+        <input type="date" name="Date" id="inputdate" placeholder="Date" required><br><br>
+        <input type="text" name="Venue" placeholder="Venue" required><br><br>
+        <input type="tel" name="Contact" placeholder="Contact" required><br><br>
+        <input type="text" name="Remarks" placeholder="Remarks"><br><br><br>
+        <button id="submitButton" type="submit" class="btn btn-primary">Create Now</button><br>
+        </form>
+        </div>
     </div>
+    <script type="text/javascript">
+        var dtToday = new Date();
+
+        var month = dtToday.getMonth() + 1;
+        var day = dtToday.getDate();
+        var year = dtToday.getFullYear();
+        if(month < 10)
+            month = '0' + month.toString();
+        if(day < 10)
+         day = '0' + day.toString();
+        var maxDate = year + '-' + month + '-' + day;
+        console.log(maxDate);
+        document.getElementById('inputdate').setAttribute('min', maxDate);
+    </script>
   </body>
 </html>

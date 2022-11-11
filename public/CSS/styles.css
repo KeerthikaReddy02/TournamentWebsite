@@ -21,14 +21,30 @@ h3{
 }
 .div1{
   display: inline-block;
-  width:50%;
+  width:49%;
   height:45%;
   padding-left: 2%;
 }
 .div2{
   display: inline-block;
-  width:50%;
+  width:49%;
   height:45%;
+}
+.div1-player{
+  display: inline-block;
+  width:45%;
+  height:45%;
+  padding-left: 2%;
+}
+.div2-player{
+  display: inline-block;
+  width:30%;
+  height:45%;
+}
+.flex-container {
+  display: flex;
+  width:100%;
+  justify-content: center;
 }
 .btn{
   background-color: grey;
@@ -46,12 +62,12 @@ label{
 }
 #submitButton{
   width: 150px;
+  align-items:  center;
 }
 .info-shape{
   background-color: #45A29E;
-  border-radius: 50px 50px 50px 50px;
   width: 200px;
-  padding: 0.1%;
+  padding: 1%;
   text-align: center;
   display: inline-block;
   margin:2%;

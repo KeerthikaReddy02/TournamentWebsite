@@ -8,14 +8,73 @@
   </head>
   <body class="body2">
     <img class="logo" src="../Images/logo.png" alt="logo">
-    <h1 style="text-align:center;">Player Details</h1>
+    <h1 style="text-align:center;"><u>Details</u></h1><br>
+
+    <h3 style="text-align:left; padding-left:4%;">Status: <%=Status%></h3>
+
+    <form style="padding-right:2%; text-align:right;" action="deleteTourn" method="post">
+    <input type="text" name="id" value="<%=Id%>" hidden>
+    <button id="submitButton" type="submit" class="btn btn-primary">Delete Game</button><br>
+    </form>
+    <br><br>
+
+    <div class="flex-container">
+
+      <div class="" style="padding-right:4%;">
+        <h2 >Player Details</h2><br>
         <div class="inner-block">
-          <h2 style="text-align:center;">Details</h2><br>
-          <% for(let i = 0; i < Name.length; i++ ){ %>
-          <h5>Player <%=i+1%>: <%=Name[i]%> </h5>
-          <h5>Contact info: <%=Contact[i]%> </h5>
+          <% for(let i = 0; i < NameHost.length; i++ ){ %>
+          <h5>Player <%=i+1%>: <%=NameHost[i]%> </h5>
+          <h5>Contact info: <%=ContactHost[i]%> </h5>
           <br>
           <% } %>
         </div>
+      </div>
+
+      <div style="padding-right:4%;">
+        <h2 >Tournament Details</h2><br>
+          <h5>Name: <%=Name%> </h5>
+          <h5>Total Number of players: <%=NumberOfPlayers%> </h5>
+          <h5>Format: <%=Format%> </h5>
+          <h5>Time: <%=Time%> </h5>
+          <h5>Date: <%=Date%> </h5>
+          <h5>Venue: <%=Venue%> </h5>
+          <h5>Contact info: <%=Contact%> </h5>
+          <h5>Number of Players who joined the game: <%=Count%>/<%=NumberOfPlayers%> </h5>
+        <br>
+      </div>
+
+      <div class="">
+        <h2 style="text-align:center;">Update game information</h2><br>
+        <form action="updateTournDetails" method="post">
+        <input type="text" name="Name" placeholder="Name" required><br><br>
+        <input type="number" name="NoOfPlay" placeholder="Number of Players" required><br><br>
+        <input type="text" name="Format" placeholder="Format" required><br><br>
+        <input type="time" name="Time" placeholder="Time" required><br><br>
+        <input type="date" name="Date" id="inputdate" placeholder="Date" required><br><br>
+        <input type="text" name="Venue" placeholder="Venue" required><br><br>
+        <input type="tel" name="Contact" placeholder="Contact" required><br><br>
+        <input type="text" name="Remarks" placeholder="Remarks"><br><br><br>
+        <input type="text" name="id" value="<%=Id%>" hidden>
+        <button id="submitButton" type="submit" class="btn btn-primary">Update Now</button><br>
+        </form>
+      </div>
+
+    </div>
+    <br><br>
+    <script type="text/javascript">
+        var dtToday = new Date();
+
+        var month = dtToday.getMonth() + 1;
+        var day = dtToday.getDate();
+        var year = dtToday.getFullYear();
+        if(month < 10)
+            month = '0' + month.toString();
+        if(day < 10)
+         day = '0' + day.toString();
+        var maxDate = year + '-' + month + '-' + day;
+        console.log(maxDate);
+        document.getElementById('inputdate').setAttribute('min', maxDate);
+    </script>
   </body>
 </html>
