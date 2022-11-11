@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(express.static("public"));
 
 mongoose
-.connect("mongodb://localhost:27017/tournamentdB")
+.connect("mongodb+srv://user:user@cluster0.vhxr2p6.mongodb.net/?retryWrites=true&w=majority")
 .then(() => console.log("Connected to db"))
 .catch(err => console.log(`Could not Connected to db ${process.env.DB_CONNECTION} `, err));
 
